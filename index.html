@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chá de fraldas da Isabela - Confirmação</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Elsie+Swash+Caps:wght@400;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+  <style>
+    body {
+       font-family: "Nunito", sans-serif;
+       color: #48358c;
+      background-color: #fffaf0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      flex-direction: column;
+    }
+    .card {
+      background: #ffffff;
+      padding: 32px;
+      border: 1px solid #48358c;
+      border-radius: 12px;
+      width: 75%;
+      max-width: 380px;
+      z-index: 1;
+    }
+    h1 {
+      font-family: "Elsie Swash Caps", serif;
+      font-weight: 400;
+      font-style: normal;
+      color: #48358c;
+      z-index: 1;
+    }
+
+    h1 span{
+      display: block;
+      font-size: 76px;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+    .field {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+    input:focus {
+      outline: none;
+      border-color: #24195e;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #48358c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #24195e;
+    }
+    .mensagem {
+      text-align: center;
+      color: #2e7d32;
+      font-size: 16px;
+      display: none;
+    }
+
+@keyframes move {
+    100% {
+        transform: translate3d(0, 0, 1px) rotate(360deg);
+    }
+}
+
+.background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: #fffaf0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.background span {
+    width: 5vmin;
+    height: 5vmin;
+    border-radius: 5vmin;
+    backface-visibility: hidden;
+    position: absolute;
+    animation: move;
+    animation-duration: 24;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+
+.background span:nth-child(0) {
+    color: #efe1ff;
+    top: 17%;
+    left: 28%;
+    animation-duration: 211s;
+    animation-delay: -44s;
+    transform-origin: 20vw -24vh;
+    box-shadow: 10vmin 0 1.744799449212241vmin currentColor;
+}
+.background span:nth-child(1) {
+    color: #efe1ff;
+    top: 64%;
+    left: 16%;
+    animation-duration: 36s;
+    animation-delay: -180s;
+    transform-origin: -15vw 4vh;
+    box-shadow: -10vmin 0 1.6025964936118062vmin currentColor;
+}
+.background span:nth-child(2) {
+    color: #efe1ff;
+    top: 66%;
+    left: 95%;
+    animation-duration: 257s;
+    animation-delay: -79s;
+    transform-origin: -11vw -21vh;
+    box-shadow: 10vmin 0 2.1528968007389016vmin currentColor;
+}
+.background span:nth-child(3) {
+    color: #efe1ff;
+    top: 95%;
+    left: 55%;
+    animation-duration: 219s;
+    animation-delay: -128s;
+    transform-origin: -19vw 12vh;
+    box-shadow: -10vmin 0 1.7728430650951705vmin currentColor;
+}
+.background span:nth-child(4) {
+    color: #efe1ff;
+    top: 54%;
+    left: 69%;
+    animation-duration: 38s;
+    animation-delay: -245s;
+    transform-origin: -20vw -15vh;
+    box-shadow: -10vmin 0 2.015443349262581vmin currentColor;
+}
+.background span:nth-child(5) {
+    color: #efe1ff;
+    top: 31%;
+    left: 12%;
+    animation-duration: 221s;
+    animation-delay: -84s;
+    transform-origin: 5vw 14vh;
+    box-shadow: 10vmin 0 1.942051505459744vmin currentColor;
+}
+.background span:nth-child(6) {
+    color: #efe1ff;
+    top: 68%;
+    left: 55%;
+    animation-duration: 80s;
+    animation-delay: -108s;
+    transform-origin: 24vw -23vh;
+    box-shadow: -10vmin 0 1.5960666469526248vmin currentColor;
+}
+.background span:nth-child(7) {
+    color: #efe1ff;
+    top: 7%;
+    left: 21%;
+    animation-duration: 11s;
+    animation-delay: -127s;
+    transform-origin: -20vw 20vh;
+    box-shadow: 10vmin 0 1.4475591137308612vmin currentColor;
+}
+.background span:nth-child(8) {
+    color: #efe1ff;
+    top: 88%;
+    left: 83%;
+    animation-duration: 189s;
+    animation-delay: -250s;
+    transform-origin: 21vw 7vh;
+    box-shadow: 10vmin 0 1.253557516675539vmin currentColor;
+}
+.background span:nth-child(9) {
+    color: #efe1ff;
+    top: 34%;
+    left: 45%;
+    animation-duration: 167s;
+    animation-delay: -29s;
+    transform-origin: -1vw 23vh;
+    box-shadow: 10vmin 0 1.350754752393568vmin currentColor;
+}
+.background span:nth-child(10) {
+    color: #efe1ff;
+    top: 81%;
+    left: 30%;
+    animation-duration: 14s;
+    animation-delay: -226s;
+    transform-origin: -13vw -22vh;
+    box-shadow: 10vmin 0 1.7279424033469413vmin currentColor;
+}
+.background span:nth-child(11) {
+    color: #efe1ff;
+    top: 64%;
+    left: 94%;
+    animation-duration: 99s;
+    animation-delay: -14s;
+    transform-origin: 1vw -18vh;
+    box-shadow: -10vmin 0 1.6518943330578035vmin currentColor;
+}
+.background span:nth-child(12) {
+    color: #efe1ff;
+    top: 26%;
+    left: 48%;
+    animation-duration: 18s;
+    animation-delay: -9s;
+    transform-origin: 14vw 14vh;
+    box-shadow: -10vmin 0 1.5604611349363753vmin currentColor;
+}
+.background span:nth-child(13) {
+    color: #efe1ff;
+    top: 48%;
+    left: 95%;
+    animation-duration: 7s;
+    animation-delay: -172s;
+    transform-origin: 7vw 2vh;
+    box-shadow: 10vmin 0 1.563316974401502vmin currentColor;
+}
+.background span:nth-child(14) {
+    color: #efe1ff;
+    top: 64%;
+    left: 59%;
+    animation-duration: 39s;
+    animation-delay: -84s;
+    transform-origin: -20vw -18vh;
+    box-shadow: 10vmin 0 1.9373863854605071vmin currentColor;
+}
+.background span:nth-child(15) {
+    color: #efe1ff;
+    top: 92%;
+    left: 6%;
+    animation-duration: 191s;
+    animation-delay: -120s;
+    transform-origin: -15vw -22vh;
+    box-shadow: 10vmin 0 1.992675872488734vmin currentColor;
+}
+.background span:nth-child(16) {
+    color: #efe1ff;
+    top: 54%;
+    left: 39%;
+    animation-duration: 27s;
+    animation-delay: -193s;
+    transform-origin: 5vw -5vh;
+    box-shadow: 10vmin 0 1.4662798314908985vmin currentColor;
+}
+.background span:nth-child(17) {
+    color: #efe1ff;
+    top: 73%;
+    left: 57%;
+    animation-duration: 59s;
+    animation-delay: -193s;
+    transform-origin: -14vw -22vh;
+    box-shadow: 10vmin 0 1.3479827443411971vmin currentColor;
+}
+.background span:nth-child(18) {
+    color: #efe1ff;
+    top: 78%;
+    left: 24%;
+    animation-duration: 167s;
+    animation-delay: -240s;
+    transform-origin: -12vw 8vh;
+    box-shadow: -10vmin 0 1.8640800450317008vmin currentColor;
+}
+.background span:nth-child(19) {
+    color: #efe1ff;
+    top: 10%;
+    left: 33%;
+    animation-duration: 254s;
+    animation-delay: -71s;
+    transform-origin: -7vw -10vh;
+    box-shadow: 10vmin 0 2.1331984719691537vmin currentColor;
+}
+.background span:nth-child(20) {
+    color: #efe1ff;
+    top: 1%;
+    left: 88%;
+    animation-duration: 147s;
+    animation-delay: -223s;
+    transform-origin: -13vw -3vh;
+    box-shadow: -10vmin 0 1.5598127365594967vmin currentColor;
+}
+.background span:nth-child(21) {
+    color: #efe1ff;
+    top: 50%;
+    left: 20%;
+    animation-duration: 100s;
+    animation-delay: -37s;
+    transform-origin: 10vw -3vh;
+    box-shadow: 10vmin 0 1.619020684684925vmin currentColor;
+}
+.background span:nth-child(22) {
+    color: #efe1ff;
+    top: 93%;
+    left: 42%;
+    animation-duration: 130s;
+    animation-delay: -110s;
+    transform-origin: -21vw 0vh;
+    box-shadow: -10vmin 0 1.7752509616430128vmin currentColor;
+}
+.background span:nth-child(23) {
+    color: #efe1ff;
+    top: 91%;
+    left: 50%;
+    animation-duration: 144s;
+    animation-delay: -117s;
+    transform-origin: -18vw 17vh;
+    box-shadow: 10vmin 0 2.178164283698867vmin currentColor;
+}
+.background span:nth-child(24) {
+    color: #efe1ff;
+    top: 19%;
+    left: 4%;
+    animation-duration: 179s;
+    animation-delay: -229s;
+    transform-origin: -16vw 5vh;
+    box-shadow: -10vmin 0 1.6899873184338619vmin currentColor;
+}
+.background span:nth-child(25) {
+    color: #efe1ff;
+    top: 32%;
+    left: 85%;
+    animation-duration: 263s;
+    animation-delay: -260s;
+    transform-origin: -6vw -11vh;
+    box-shadow: 10vmin 0 1.801153760413003vmin currentColor;
+}
+.background span:nth-child(26) {
+    color: #efe1ff;
+    top: 82%;
+    left: 27%;
+    animation-duration: 99s;
+    animation-delay: -87s;
+    transform-origin: -3vw 8vh;
+    box-shadow: -10vmin 0 1.5217274682596003vmin currentColor;
+}
+.background span:nth-child(27) {
+    color: #efe1ff;
+    top: 45%;
+    left: 8%;
+    animation-duration: 220s;
+    animation-delay: -26s;
+    transform-origin: 7vw 14vh;
+    box-shadow: -10vmin 0 2.098156886448213vmin currentColor;
+}
+.background span:nth-child(28) {
+    color: #efe1ff;
+    top: 33%;
+    left: 41%;
+    animation-duration: 144s;
+    animation-delay: -244s;
+    transform-origin: 17vw -17vh;
+    box-shadow: -10vmin 0 1.8554767464852304vmin currentColor;
+}
+.background span:nth-child(29) {
+    color: #efe1ff;
+    top: 14%;
+    left: 41%;
+    animation-duration: 214s;
+    animation-delay: -149s;
+    transform-origin: 18vw 24vh;
+    box-shadow: -10vmin 0 2.173237221836474vmin currentColor;
+}
+.background span:nth-child(30) {
+    color: #efe1ff;
+    top: 9%;
+    left: 54%;
+    animation-duration: 240s;
+    animation-delay: -37s;
+    transform-origin: -23vw 14vh;
+    box-shadow: 10vmin 0 2.0650873143907447vmin currentColor;
+}
+.background span:nth-child(31) {
+    color: #efe1ff;
+    top: 65%;
+    left: 6%;
+    animation-duration: 206s;
+    animation-delay: -197s;
+    transform-origin: -23vw 15vh;
+    box-shadow: 10vmin 0 1.4542212842700053vmin currentColor;
+}
+
+  </style>
+</head>
+<body>
+ <h1>Chá de fraldas da <span>Isabela</span></h1>
+  <div class="card">
+    <h2>Confirmação de Presença</h2>
+    
+    <form id="formPresenca">
+      <div class="field">
+        <label for="nome">Seu Nome Completo (obrigatório))</label>
+        <input type="text" id="nome" required placeholder="Digite seu nome">
+      </div>
+      
+      <div class="field">
+        <label for="acompanhante">Nome do Acompanhante (se houver)</label>
+        <input type="text" id="acompanhante" placeholder="Digite o nome se houver">
+      </div>
+
+      <button type="submit" id="btnEnviar">Confirmar Presença</button>
+    </form>
+
+    <div class="mensagem" id="mensagemSucesso">
+      ✓ Presença confirmada com sucesso!
+    </div>
+  </div>
+
+  <div class="background">
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+</div>
+
+  <script>
+    // SUBSTiTUA PELO SEU URL DO PASSO 1
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwpQDz_3p5zJxWgq2cx3gmWwJOT5Dr6EECwHxbygXpJvEs2ByBzBUNdg905QAdgYOMREQ/exec';
+
+    document.getElementById('formPresenca').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const btn = document.getElementById('btnEnviar');
+      btn.innerText = 'Enviando...';
+      btn.disabled = true;
+
+      const payload = {
+        nome: document.getElementById('nome').value,
+        acompanhante: document.getElementById('acompanhante').value
+      };
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        document.getElementById('formPresenca').style.display = 'none';
+        document.getElementById('mensagemSucesso').style.display = 'block';
+      })
+      .catch(error => {
+        alert('Ocorreu um erro ao enviar. Tente novamente.');
+        btn.innerText = 'Confirmar Presença';
+        btn.disabled = false;
+      });
+    });
+  </script>
+
+</body>
+</html>
