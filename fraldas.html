@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque de Fraldas - Chá da Isabela</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <!-- Meta tags para comportamento de App no Celular -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Fraldas Isabela">
+    <meta name="theme-color" content="#fcf9f5">
+
+    <style>
+        :root {
+            --bg-color: #fffaf0;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #777777;
+            --accent: #48358c;
+            --border: #48358c;
+        }
+
+        body {
+            font-family: "Nunito", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #48358c;
+            margin-bottom: 5px;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Cards de Resumo */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .card h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin: 0 0 8px 0;
+        }
+
+        .card .value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #48358c;
+            margin: 0;
+        }
+
+        .card .sub-value {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Filtros */
+        .filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* Lista de itens */
+        .grid-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+        }
+
+        .item-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .item-brand {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #4a3b32;
+        }
+
+        .badge-size {
+            background: #48358c;
+            color: #ffffff;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .item-details {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .item-footer {
+            border-top: 1px solid #f4ede4;
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            text-align: center;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+            padding: 40px;
+        }
+
+     /* Banner de Instalação no Celular (A2HS) */
+        .pwa-banner {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 30px);
+            max-width: 500px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            z-index: 1000;
+            box-sizing: border-box;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .pwa-banner.hidden {
+            display: none !important;
+        }
+
+        .pwa-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pwa-icon {
+            font-size: 1.5rem;
+        }
+
+        .pwa-text strong {
+            display: block;
+            font-size: 0.9rem;
+            color: #4a3b32;
+        }
+
+        .pwa-text span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .pwa-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pwa-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .pwa-close {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        @keyframes slideUp {
+            from { transform: translate(-50%, 100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Estoque de Fraldas</h1>
+            <!-- <p class="subtitle">Acompanhamento em tempo real do Chá da Isabela</p> -->
+        </header>
+
+        <div class="summary-cards">
+            <div class="card">
+                <h3>Total de Fraldas</h3>
+                <p class="value" id="total-fraldas">-</p>
+                <span class="sub-value" id="sub-fraldas">Geral: -</span>
+            </div>
+            <div class="card">
+                <h3>Pacotes Recebidos</h3>
+                <p class="value" id="total-pacotes">-</p>
+                <span class="sub-value" id="sub-pacotes">Geral: -</span>
+            </div>
+        </div>
+
+        <div class="filters" id="filter-container">
+            <button class="filter-btn active" onclick="filterBy('TODOS')">Todos</button>
+            <button class="filter-btn" onclick="filterBy('RN')">RN</button>
+            <button class="filter-btn" onclick="filterBy('P')">P</button>
+            <button class="filter-btn" onclick="filterBy('M')">M</button>
+            <button class="filter-btn" onclick="filterBy('G')">G</button>
+            <button class="filter-btn" onclick="filterBy('XG')">XG</button>
+        </div>
+
+        <div class="grid-list" id="diaper-list">
+            <div class="loading">Carregando dados da planilha...</div>
+        </div>
+    </div>
+
+    <!-- Banner Sugestão de Atalho na Tela Inicial -->
+    <div id="pwa-banner" class="pwa-banner hidden">
+        <div class="pwa-content">
+            <span class="pwa-icon">📱</span>
+            <div class="pwa-text">
+                <strong>Adicionar Atalho</strong>
+                <span id="pwa-instructions">Acesse mais fácil pelo seu celular</span>
+            </div>
+        </div>
+        <div class="pwa-actions">
+            <button id="pwa-install-btn" class="pwa-btn" onclick="handleInstallClick()">Adicionar</button>
+            <button class="pwa-close" onclick="dismissPwaBanner()">×</button>
+        </div>
+    </div>
+
+    <script>
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwu53KaLWuCLe47uXYkecH64y92cm0yrCHWLtMSDdLWoTxbGiIqOf-mZz302uD7tyr7Xw/exec';
+        let allData = [];
+        let currentFilter = 'TODOS';
+        let deferredPrompt;
+
+        // ---- CARREGAMENTO E RENDERIZAÇÃO ----
+        async function fetchData() {
+            try {
+                const response = await fetch(WEB_APP_URL);
+                allData = await response.json();
+                updateSummary(allData);
+                renderList(allData);
+            } catch (error) {
+                document.getElementById('diaper-list').innerHTML = '<div class="loading">Erro ao carregar dados. Verifique a URL do script.</div>';
+                console.error(error);
+            }
+        }
+
+        function updateSummary(data) {
+            const totalFraldasGeral = data.reduce((acc, item) => acc + Number(item.totalFraldas || 0), 0);
+            const totalPacotesGeral = data.reduce((acc, item) => acc + Number(item.pacotes || 0), 0);
+
+            let filtered = data;
+            if (currentFilter !== 'TODOS') {
+                filtered = data.filter(item => String(item.tamanho).trim().toUpperCase() === currentFilter);
+            }
+
+            const totalFraldasFiltrado = filtered.reduce((acc, item) => acc + Number(item.totalFraldas || 0), 0);
+            const totalPacotesFiltrado = filtered.reduce((acc, item) => acc + Number(item.pacotes || 0), 0);
+
+            document.getElementById('total-fraldas').innerText = totalFraldasFiltrado.toLocaleString('pt-BR');
+            document.getElementById('total-pacotes').innerText = totalPacotesFiltrado.toLocaleString('pt-BR');
+
+            if (currentFilter === 'TODOS') {
+                document.getElementById('sub-fraldas').innerText = `Total geral cadastrado`;
+                document.getElementById('sub-pacotes').innerText = `Total geral cadastrado`;
+            } else {
+                document.getElementById('sub-fraldas').innerText = `Geral acumulado: ${totalFraldasGeral.toLocaleString('pt-BR')}`;
+                document.getElementById('sub-pacotes').innerText = `Geral acumulado: ${totalPacotesGeral.toLocaleString('pt-BR')}`;
+            }
+        }
+
+        function renderList(data) {
+            const listContainer = document.getElementById('diaper-list');
+            
+            let filtered = data;
+            if (currentFilter !== 'TODOS') {
+                filtered = data.filter(item => String(item.tamanho).trim().toUpperCase() === currentFilter);
+            }
+
+            if (filtered.length === 0) {
+                listContainer.innerHTML = '<div class="loading">Nenhuma fralda encontrada para este tamanho.</div>';
+                return;
+            }
+
+            listContainer.innerHTML = filtered.map(item => `
+                <div class="item-card">
+                    <div>
+                        <div class="item-header">
+                            <span class="item-brand">${item.marca}</span>
+                            <span class="badge-size">${item.tamanho || '-'}</span>
+                        </div>
+                        <div class="item-details">${item.modelo || 'Modelo padrão'}</div>
+                    </div>
+                    <div class="item-footer">
+                        <span>Pacotes: <strong>${item.pacotes}</strong></span>
+                        <span><strong>${item.totalFraldas}</strong> fraldas</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterBy(size) {
+            currentFilter = size;
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText.toUpperCase() === size || (size === 'TODOS' && btn.innerText === 'Todos')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            updateSummary(allData);
+            renderList(allData);
+        }
+
+        // ---- LÓGICA DO BANNER "ADICIONAR À TELA INICIAL" ----
+        function initPwaPrompt() {
+            // Se o app já estiver rodando em modo "standalone" (tela cheia/instalado), não mostra nada
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+            if (isStandalone) return;
+
+            // Verificar se o usuário fechou o banner recentemente (lembrar a cada 7 dias)
+            const lastDismissed = localStorage.getItem('pwa_banner_dismissed');
+            if (lastDismissed) {
+                const daysDiff = (new Date().getTime() - Number(lastDismissed)) / (1000 * 3600 * 24);
+                if (daysDiff < 7) return; // Se fechou a menos de 7 dias, não exibe
+            }
+
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            const isAndroid = /Android/.test(navigator.userAgent);
+
+            // Se for iOS (Safari não dispara o evento automático do Android)
+            if (isIOS) {
+                document.getElementById('pwa-instructions').innerText = 'Toque em Compartilhar ➔ e "Adicionar à Tela de Início"';
+                document.getElementById('pwa-install-btn').style.display = 'none'; // No iOS o usuário precisa fazer manualmente pelo menu do Safari
+                showBanner();
+            }
+        }
+
+        // Evento nativo do Android/Chrome para captura do clique de instalação
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('pwa-instructions').innerText = 'Instale o atalho para abrir como um app';
+            showBanner();
+        });
+
+        function showBanner() {
+            document.getElementById('pwa-banner').classList.remove('hidden');
+        }
+
+        function handleInstallClick() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        dismissPwaBanner();
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                alert('Para adicionar à tela inicial:\n\n• No Android: Abra o menu do navegador (⋮) e toque em "Adicionar à tela inicial".\n• No iPhone: Toque no ícone de compartilhar (⎋) e selecione "Adicionar à Tela de Início".');
+            }
+        }
+
+        function dismissPwaBanner() {
+            document.getElementById('pwa-banner').classList.add('hidden');
+            // Salvar a data atual no armazenamento local do navegador
+            localStorage.setItem('pwa_banner_dismissed', new Date().getTime());
+        }
+
+        // Inicializar
+        fetchData();
+        initPwaPrompt();
+    </script>
+</body>
+</html>
